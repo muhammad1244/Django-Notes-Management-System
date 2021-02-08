@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <title>Admin Portal</title>
+    {% include 'base/baseHead.html'%}
+    
+<link rel="stylesheet" href="/static/css/custom.css" />
+</head>
+    {% include 'base/alertMessage.html'%}
+
+    
+
+<body>
+  <!--------------------------HEADER-------------------------------->
+  <div id="particles-jss" style="height: 250vh;" >
+    <div class="mainWWAdmin" >
+
+      <div class="navbarAdmin">
+        <img src="/static/images/favicon1.png" alt="" class="mainLogoNavbarAdmin">
+        <a href="/home" class="logoScrollAdmin">theeta.com</a>
+        <!-- -----------------------MENU-BAR---------------------------- -->
+        <ul class="navMenuAdmin navMenuScrollAdmin ">
+          <li><a href="/home" target="_blank">home</a></li>
+          <li><a href="/courses/{{user.id}}">courses</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/register">Registration</a></li>
+          <li><a href="/contact/{{user.id}}">contact</a></li>
+        </ul>
+      </div>
+
+
+    <!-- drop down -->
+    <div class="logoutUserContainerAdmin">
+      <div class="dropdown logoutUser">
+        <button class="btn btnDropDown btn-secondary border border-light rounded  bg-warning dropdown-toggle"
+          type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{user.first_name}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/userProfile/{{user.id}}" selected>My Profile</a>
+          <a class="dropdown-item" href="/adminSite/{{user.id}}" id="adminPanel" style="display:none;" >Go to Admin Panel</a>
+          <a class="dropdown-item" href="/logout">Log out</a>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      if ('{{user.designation}}' == 'Editor'){
+        document.getElementById("adminPanel").style.display = 'block';
+      }
+    </script>
+
+
+
+      <div class="cardsContainer container-fluid p-4">
+        <h4 class="text-danger card border border-danger py-3 mx-1 my-4">Welcome to theeta.com Admin-Panel</h4>
+        <div class="card mx-1 my-3 border border-danger container-fluid py-3">
+          <h4 class="p-2 text-warning">STATISTICS @theeta.com</h4>
+          <div class="jumbotron">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card border-info mx-sm-1 p-3 shadow rounded">
+                  <div class="card border-info shadow text-info p-3 my-card"><span class="fa fa-users"
+                      aria-hidden="true"></span></div>
+                  <div class="text-info text-center mt-3">
+                    <h4>Total Registered PUCITians</h4>
+                  </div>
+                  <div class="text-info text-center mt-2">
+                    <h1>{{Total_registered_users}}</h1>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-success mx-sm-1 p-3 shadow rounded">
+                  <div class="card border-success shadow text-success p-3 my-card"><span class="fa fa-eye"
+                      aria-hidden="true"></span></div>
+                  <div class="text-success text-center mt-3">
+                    <h4>Active PUCITians</h4>
+                  </div>
+                  <div class="text-success text-center mt-2">
+                    <h1>{{Total_Active_users}}</h1>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card border-danger mx-sm-1 p-3 shadow rounded">
+                  <div class="card border-danger shadow text-danger p-3 my-card"><span class="fa fa-heart"
+                      aria-hidden="true"></span>
+                  </div>
+                  <div class="text-danger text-center mt-3">
+                    <h4>Contacted</h4>
+                  </div>
+                  <div class="text-danger text-center mt-2">
+                    <h1>{{Total_Contacts}}</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mx-1 my-3 border border-danger container-fluid py-3 my-5">
+          <h4 class="p-2 text-warning">Active PUCITian's Data</h4>
+          <table class="table bg-secondary border border-success">
+            <thead class="bg-success text-light">
+              <tr>
+                <th scope="col-2">#</th>
+                <th scope="col-2">Full Name</th>
+                <th scope="col-6">College ID</th>
+                <th scope="col-2">Designation</th>
+                <th scope="col-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody class=" text-secondary bg-light" id="tableHeight">
+              {% for i in Display_Users %}
+              <tr>
+                <th scope="row" class="col-1"> {{ forloop.counter }}</th>
+                <td class="col-2">{{i.first_name}} {{i.last_name}}</td>
+                <td class="col-3">{{i.email}}</td>
+                <td class="col-2">{{i.designation}}</td>
+                <td class="col-4">
+                <a type="button" href="/userProfileEditAdmin/{{i.id}}" class="btn btn-warning m-1">Edit</a>
+                  <a href="/delete/{{i.id}}" class="btn btn-danger">Delete</a>
+                </td>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card mx-1 my-3 border border-danger container-fluid py-3 my-5">
+          <h4 class="p-2 text-warning">Contacts Made</h4>
+          <table class="table bg-secondary border border-success">
+            <thead class="bg-success text-light">
+              <tr>
+                <th scope="col-2">#</th>
+                <th scope="col-2">Full Name</th>
+                <th scope="col-2">Message</th>
+                <th scope="col-2">Actions</th>
+              </tr>
+            </thead> 
+            <tbody class=" text-secondary bg-light">
+              {% for i in Contacted_Users %}
+              <tr>
+                <th scope="row">{{i.id}}</th>
+                <td>{{i.first_name}} {{i.last_name}}</td>
+                <td>{{i.message}}</td>
+                <td class="col-3">
+                <a type="button" href="/userProfileEditAdmin/{{i.id}}" class="btn btn-warning m-1">Edit</a>
+                  <a href="/userProfileEditAdmin/{{i.id}}" class="btn btn-danger">Delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+
+
+
+  <script type="text/javascript" src="/static/js/main.js"></script>
+  <script type="text/javascript" src="/static/js/particles.js"></script>
+  <script type="text/javascript" src="/static/js/app copy.js"></script>
+
+
+</body>
+
+</html>

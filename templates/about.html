@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Courses | About Us! </title>
+    {% include 'base/baseHead.html'%}
+</head>
+    {% include 'base/alertMessage.html'%}
+
+<body>
+    <!--------------------------HEADER-------------------------------->
+    <div id="particles-js">
+        <div class="mainWW">
+
+            <div class="navbar">
+                <img src="/static/images/favicon1.png" alt="" class="mainLogoNavbar">
+                <a href="/home" class="logoScroll">theeta.com</a>
+                <!-- -----------------------MENU-BAR---------------------------- -->
+                <ul class="navMenu navMenuScroll ">
+                    <li><a href="/home" target="_blank">home</a></li>
+                    <li><a href="/courses/{{user.id}}">courses</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/register">Registration</a></li>
+                    <li><a href="/contact/{{user.id}}">contact</a></li>
+                </ul>
+            </div>
+
+
+<p style="font-size:40px;margin:30vh auto auto 30vw;color:white;">
+Page Under construction <i class="far fa-construction"></i>
+</p>
+
+    </div>
+    </div>
+    <script type="text/javascript" src="/static/js/main.js"></script>
+    <script type="text/javascript" src="/static/js/particles.js"></script>
+    <script type="text/javascript" src="/static/js/app.js"></script>
+
+</body>
+
+</html>
